@@ -5,15 +5,9 @@ public class App {
     static Console console = System.console();
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        int counter = 0;
-        for (int i = 4; i <= 9; i++)
-        {
-           for (int j = 7; j > 0; j--)
-           {
-               System.out.print("*");
-           }
-           System.out.println();
-        }
+                int[] x = new int[3];
+                System.out.println("x[0] is " + x[0]);
+
         // System.out.println(counter);
         
         // circlePerimeter(args);
