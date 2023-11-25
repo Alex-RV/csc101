@@ -5,8 +5,16 @@ public class App {
     static Console console = System.console();
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-                int[] x = new int[3];
-                System.out.println("x[0] is " + x[0]);
+        int arr[] = {5, 1, 2, 3, 4};
+        int min = arr[0];
+        int index = 0;
+        for (int i = 1; i < arr.length; i++) {
+            if(arr[i] < min) {
+                index = i;
+                min = arr[i];
+            }
+        }
+        System.out.println(index);
 
         // System.out.println(counter);
         
