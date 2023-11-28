@@ -1,10 +1,48 @@
 import java.util.Scanner;
+import java.util.HashMap;
+
+class EmployeeInfo {
+    private String title;
+    private int numberOfEmployees;
+    private int numberOfEmployeesToday;
+    private int percentageOfTips;
+    private double tipAmount;
+
+    public EmployeeInfo(String title, int numberOfEmployees, int numberOfEmployeesToday, int percentageOfTips, double tipAmount) {
+        this.title = title;
+        this.numberOfEmployees = numberOfEmployees;
+        this.numberOfEmployeesToday = numberOfEmployeesToday;
+        this.percentageOfTips = percentageOfTips;
+        this.tipAmount = tipAmount;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getNumberOfEmployees() {
+        return numberOfEmployees;
+    }
+
+    public int getNumberOfEmployeesToday() {
+        return numberOfEmployeesToday;
+    }
+
+    public int getPercentageOfTips(){
+        return percentageOfTips;
+    }
+
+    public double getTipAmount() {
+        return tipAmount;
+    }
+}
+
 
 public class RestaurantCheckManager {
+    public static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
+    // output : [0]-totalSales, [1]-pooledTips, [2]-numChecks
+    static double[] AskForData(){
         double totalSales = 0;
         double pooledTips = 0;
         int numChecks = 0;
@@ -38,24 +76,57 @@ public class RestaurantCheckManager {
                 break;
             }
         }
+        double[] output = {totalSales, pooledTips, numChecks};
+        return output;
+    }
+
+    static HashMap<String, EmployeeInfo> InitializeEmployees(){
+        HashMap<String, EmployeeInfo> employees = new HashMap<String, EmployeeInfo>();
+        employees.put("Servers", new EmployeeInfo("Server", 3, 2, 60, 0));
+        employees.put("Kitchen", new EmployeeInfo("Kitchen", 3, 3, 25, 0));
+        // host/hostess and the busser
+        employees.put("HHB", new EmployeeInfo("HHB", 2, 2,15, 0));
+        return employees;
+    }
+
+    static void MakeOutput(double[] tips){
+        double serverTip = tips[0];
+        double kitchenTip = tips[1];
+        double HHBTip = tips[2]; 
+        double pooledTips = tips[3];
 
         // Tip allocation
         System.out.println("Tip allocation for $" + String.format("%.2f", pooledTips) + " in tips.");
 
-        double serverTip = pooledTips * 0.5;
-        double kitchenTip = pooledTips * 0.3;
-        double hostessTip = pooledTips * 0.1;
-        double busserTip = pooledTips * 0.1;
-
         System.out.println("Servers              : $" + String.format("%.2f", serverTip));
-        System.out.println("       Server 1      : $" + String.format("%.2f", serverTip / 2));
-        System.out.println("       Server 2      : $" + String.format("%.2f", serverTip / 2));
+        System.out.println("       Server 1      : $" + String.format("%.2f", tips[4]));
+        System.out.println("       Server 2      : $" + String.format("%.2f", tips[4]));
         System.out.println("       Server 3      : $0.00    (did not work)");
         System.out.println("Kitchen              : $" + String.format("%.2f", kitchenTip));
-        System.out.println("       Chef          : $" + String.format("%.2f", kitchenTip * 0.4));
-        System.out.println("       Sous-Chef     : $" + String.format("%.2f", kitchenTip * 0.3));
-        System.out.println("       Kitchen Aid   : $" + String.format("%.2f", kitchenTip * 0.2));
-        System.out.println("Host/Hostess         : $" + String.format("%.2f", hostessTip));
-        System.out.println("Busser               : $" + String.format("%.2f", busserTip));
+        System.out.println("       Chef          : $" + String.format("%.2f", tips[5] ));
+        System.out.println("       Sous-Chef     : $" + String.format("%.2f", tips[5] ));
+        System.out.println("       Kitchen Aid   : $" + String.format("%.2f", tips[5] ));
+        System.out.println("Host/Hostess         : $" + String.format("%.2f", tips[6]));
+        System.out.println("Busser               : $" + String.format("%.2f", tips[6]));
+    }
+
+    static double[] TotalTipsAmount(HashMap<String, EmployeeInfo> employees, double pooledTips){
+        double serverTip, kitchenTip, HHBTip, eachServerTip, eachKitchenTip, eachHHBTip;
+        System.out.println((employees.get("Servers").getPercentageOfTips()));
+        serverTip = pooledTips * ((employees.get("Servers").getPercentageOfTips())/100.0);
+        eachServerTip = serverTip/employees.get("Servers").getNumberOfEmployeesToday();
+        kitchenTip = pooledTips * ((employees.get("Kitchen").getPercentageOfTips())/100.0);
+        eachKitchenTip = kitchenTip/employees.get("Kitchen").getNumberOfEmployeesToday();
+        HHBTip = pooledTips * ((employees.get("HHB").getPercentageOfTips())/100.0);
+        eachHHBTip = HHBTip/employees.get("HHB").getNumberOfEmployeesToday();
+        System.out.println("serverTip "+serverTip);
+        double[] tips={serverTip, kitchenTip, HHBTip, pooledTips,eachServerTip, eachKitchenTip, eachHHBTip};
+        return tips;
+    }
+
+    public static void main(String[] args) {
+        // double[] output = AskForData();
+        double[] output = {500, 100, 1};
+        MakeOutput(TotalTipsAmount(InitializeEmployees(), output[1]));
     }
 }
