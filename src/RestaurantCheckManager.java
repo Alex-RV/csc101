@@ -112,21 +112,34 @@ public class RestaurantCheckManager {
 
     static double[] TotalTipsAmount(HashMap<String, EmployeeInfo> employees, double pooledTips){
         double serverTip, kitchenTip, HHBTip, eachServerTip, eachKitchenTip, eachHHBTip;
-        System.out.println((employees.get("Servers").getPercentageOfTips()));
+
         serverTip = pooledTips * ((employees.get("Servers").getPercentageOfTips())/100.0);
         eachServerTip = serverTip/employees.get("Servers").getNumberOfEmployeesToday();
+
         kitchenTip = pooledTips * ((employees.get("Kitchen").getPercentageOfTips())/100.0);
         eachKitchenTip = kitchenTip/employees.get("Kitchen").getNumberOfEmployeesToday();
+
         HHBTip = pooledTips * ((employees.get("HHB").getPercentageOfTips())/100.0);
         eachHHBTip = HHBTip/employees.get("HHB").getNumberOfEmployeesToday();
-        System.out.println("serverTip "+serverTip);
+
         double[] tips={serverTip, kitchenTip, HHBTip, pooledTips,eachServerTip, eachKitchenTip, eachHHBTip};
         return tips;
     }
 
     public static void main(String[] args) {
-        // double[] output = AskForData();
-        double[] output = {500, 100, 1};
+        // UnitTests();
+
+        double[] output = AskForData();
         MakeOutput(TotalTipsAmount(InitializeEmployees(), output[1]));
     }
+
+    static void UnitTests(){
+        double[] output0 = {500, 100, 4};
+        double[] output1 = {500, 150, 2};
+        double[] output2 = {500, 10, 1};
+        MakeOutput(TotalTipsAmount(InitializeEmployees(), output0[1]));
+        MakeOutput(TotalTipsAmount(InitializeEmployees(), output1[1]));
+        MakeOutput(TotalTipsAmount(InitializeEmployees(), output2[1]));
+    }
+
 }
