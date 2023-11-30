@@ -4,17 +4,18 @@ import java.util.Scanner;
 public class App {
     static Console console = System.console();
     static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args) {
-        int arr[] = {5, 1, 2, 3, 4};
-        int min = arr[0];
-        int index = 0;
-        for (int i = 1; i < arr.length; i++) {
-            if(arr[i] < min) {
-                index = i;
-                min = arr[i];
-            }
+
+    public static int max(int a, int b){
+        if(a < b){
+           return b;
+        } else { 
+           return a;
         }
-        System.out.println(index);
+     }
+    public static void main(String[] args) {
+        
+        max('a', 'b');
+         
 
         // System.out.println(counter);
         
