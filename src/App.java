@@ -12,12 +12,15 @@ public class App {
            return a;
         }
      }
-    public static void main(String[] args) {
-        
-        max('a', 'b');
-         
 
-        // System.out.println(counter);
+     static void doubleValue(int value){
+        value = (value * 2);
+    }
+    public static void main(String[] args) {
+        int x = 3;
+        doubleValue(x);
+        System.out.println(x);
+        // max('a', 'b');
         
         // circlePerimeter(args);
         // trianglePerimeter(args);
